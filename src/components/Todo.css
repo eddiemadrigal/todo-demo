@@ -1,0 +1,21 @@
+.item {
+    text-decoration: none;
+}
+
+.item:hover {
+    text-decoration: line-through;
+}
+
+.completed {
+    text-decoration: line-through;
+}
+
+form {
+    text-align: center;
+}
+
+.todo-list {
+    margin-top: 20px;
+    text-align: center;
+    cursor: pointer;
+}
