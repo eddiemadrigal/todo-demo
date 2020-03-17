@@ -38,11 +38,12 @@ function App() {
   return (
     <div>
       <Container id="container">
+
         <Row>
           <Col sm="12" md={{ size: 6, offset: 3 }}>
 
             <h1>Todo List</h1>
-
+            <p className="link">GitHub: <a href="https://github.com/eddiemadrigal/todo-demo" target="_blank">https://github.com/eddiemadrigal/todo-demo</a></p>
             <TodoForm addTodo={addTodo} />  
 
             {todos.map((item, index) => (
@@ -56,6 +57,7 @@ function App() {
             ))}
           </Col>
         </Row>
+        
       </Container>
     </div>
   );
