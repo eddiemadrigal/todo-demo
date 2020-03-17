@@ -1,15 +1,17 @@
 import React from 'react';
-import './Todo.css';
+import { Button, Input } from 'reactstrap';
 
-const Item = props => {
+function Todo({ todo, index, toggleTodo, removeTodo }) {
     return (
         <div
-            onClick = {() => props.toggleCompleted(props.task.id) }
-            className = {`item${props.task.completed ? ' completed' : ''}`}
+        className="todo"
+        style={{ textDecoration: todo.completed ? "line-through" : "" }}
         >
-            <p>{ props.task.name }</p>
+        <Input id="todo-text" value = {todo.item} readOnly />
+            <Button id="complete" color="success" onClick={() => toggleTodo(index)}>Complete</Button>
+            <Button id="remove" color="danger" onClick={() => removeTodo(index)}>x</Button>
         </div>
     );
-};
+}
 
-export default Item;
+export default Todo;

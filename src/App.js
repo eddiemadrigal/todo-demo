@@ -1,115 +1,64 @@
-import React from 'react';
-import { TweenLite } from 'gsap';
-import TodoList from './components/TodoList';
+import React, { useState } from "react";
+import Todo from './components/Todo';
 import TodoForm from './components/TodoForm';
-import {Container, Row, Col, Card, CardBody} from 'reactstrap';
-import './styles.css';
+import { Container, Row, Col } from 'reactstrap';
+import "./App.css";
 
-const todoItems = [];
+function App() {
 
-class App extends React.Component {
-    constructor() {
-        super();
-
-        // reference to the DOM node
-        this.myElement = null;
-        // reference to the animation
-        this.myTween = null;
-
-        this.state = {
-            todoItems,
-            name: ''
-        };
+  const [todos, setTodos] = useState([
+    {
+      item: 'Learn about reducers',
+      completed: false,
+      id: 3892987589
     }
+  ]);
 
-    
+  const addTodo = item => {
+    const newTodos = [...todos, { item, completed: false, id: new Date() }];
+    setTodos(newTodos);
+  };
 
-    toggleCompleted = clickedTaskId => {
-        this.setState({
-            todoItems: this
-                .state
-                .todoItems
-                .map(item => {
-                    if (item.id === clickedTaskId) {
-                        return {
-                            ...item,
-                            completed: !item.completed
-                        };
-                    } else {
-                        return item;
-                    }
-                })
-        })
+  const toggleTodo = index => {
+    const newTodos = [...todos];
+    if (newTodos[index].completed === false) {
+      newTodos[index].completed = true;
+    } else {
+      newTodos[index].completed = false;
     }
+    setTodos(newTodos);
+  };
 
-    addTask = taskName => {
-        const newTask = {
-            id: new Date(),
-            name: taskName,
-            completed: false
-        };
-        this.setState({
-            todoItems: [
-                ...this.state.todoItems,
-                newTask
-            ]
-        })
-    }
+  const removeTodo = index => {
+    const newTodos = [...todos];
+    newTodos.splice(index, 1);
+    setTodos(newTodos);
+  };
 
-    clearCompleted = e => {
-        e.preventDefault();
-        this.setState({
-            todoItems: this
-                .state
-                .todoItems
-                .filter(todo => todo.completed === false)
-        })
-    }
+  return (
+    <div>
+      <Container id="container">
+        <Row>
+          <Col sm="12" md={{ size: 6, offset: 3 }}>
 
-    componentDidMount(){
-        // use the node ref to create the animation
-        this.myTween = TweenLite.to(this.myElement, 2, { y:100 });
-    }
+            <h1>Todo List</h1>
 
-    render() {
-        return (
-            <div ref={div => this.myElement = div} id="mainDiv" >
-                <Container className="mt-4">
-                    <Row>
-                        <Col
-                            sm="12"
-                            md={{
-                            size: 6,
-                            offset: 3
-                        }}>
-                            <Card>
-                                <CardBody>
-                                    <div>
-                                        <h1>To Do List</h1>
-                                        <TodoForm addTask={this.addTask}/>
-                                    </div>
-                                    <TodoList
-                                        todoItems={this.state.todoItems}
-                                        toggleCompleted={this.toggleCompleted}
-                                        clearCompleted={this.clearCompleted}/>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                    </Row>
-                    <Row>
-                    <Col
-                            sm="12"
-                            md={{
-                            size: 6,
-                            offset: 3
-                        }}>
-                            <p id='github-link'>Source Code: <a href='https://github.com/eddiemadrigal/React-Todo' target='_blank' rel='noopener noreferrer'>https://github.com/eddiemadrigal/React-Todo</a></p>
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
-        );
-    }
+            <TodoForm addTodo={addTodo} />  
+
+            {todos.map((item, index) => (
+              <Todo
+                key={index}
+                index={index}
+                todo={item}
+                toggleTodo={toggleTodo}
+                removeTodo={removeTodo}
+              />
+            ))}
+          </Col>
+        </Row>
+      </Container>
+    </div>
+  );
 }
 
 export default App;
