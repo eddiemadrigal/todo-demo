@@ -1,29 +1,40 @@
 import React, { useState } from 'react';
-import { Form, Input, Button } from 'reactstrap';
+import { Container, Row, Col, Button, Form, Input} from 'reactstrap';
 
-function TodoForm({ addTodo }) {
-  const [value, setValue] = useState("");
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    if (!value) return;
-    addTodo(value);
-    setValue(""); 
+const TodoForm = (props) => {
+  const { addTodo, clearCompleted } = props;
+  const [item, setItem] = useState("");
+  const handleChange = event => setItem(event.target.value);
+  const handleSubmit = event => {
+    event.preventDefault();
+    addTodo(item);
+    setItem("");
+  };
+  const handleClear = event => {
+    event.preventDefault();
+    clearCompleted();
   };
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Input
-        id="input"
-        type="text"
-        className="input"
-        value={ value }
-        placeholder = "Enter a Task ..."
-        onChange={e => setValue(e.target.value)}
-      />
-      <Button id="submitButton" color="primary" size="lg" block>Submit</Button>
+      <Container id="container">
+        <h1>Todo List</h1>
+        <Row>
+          <Col sm="12" md={{ size: 6, offset: 3 }}>
+            <Input type="text"
+              id="input"
+              name="item"
+              placeholder="Add a todo item"
+              value={item}
+              onChange={handleChange} />
+            <Button color="success" size="lg" block>Add the Todo Item</Button>
+            <Button onClick={handleClear} color="danger" size="lg" block>Remove Completed</Button>
+          </Col>
+        </Row>
+      </Container>
+      
     </Form>
   );
-}
+};
 
 export default TodoForm;

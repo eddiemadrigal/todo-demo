@@ -1,34 +1,27 @@
-#submitButton {
-    margin-top: 10px;
-    font-size: 1.6rem;
+#container {
+  margin-top: 50px;
 }
 
 h1 {
-    text-align: center;
+  text-align: center;
+}
+
+.completed {
+    text-decoration: line-through;
+}
+
+.todo-list {
+  text-align: center;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+.todo-list:hover {
+  color: red;
 }
 
 #input {
-    font-size: 1.6rem;
-}
-
-#todo-text {
-    font-size: 1.6rem;
-    display: inline;
-    background: white;
-    width: 65%;
-    margin-top: 10px;
-}
-
-#container {
-    margin-top: 60px;
-}
-
-#complete, #remove {
-    font-size: 1.6rem;
-    margin-top: -10px;
-    margin-left: 5px;
-}
-
-p.link {
-    text-align: center;
+  font-size: 1.6rem;
+  text-align: center;
+  margin-bottom: 10px;
 }

@@ -1,64 +1,30 @@
-import React, { useState } from "react";
-import Todo from './components/Todo';
-import TodoForm from './components/TodoForm';
-import { Container, Row, Col } from 'reactstrap';
-import "./App.css";
+import React, { useReducer } from 'react';
+import { initialState, reducer } from './reducer';
+import './App.css';
+
+import TodoList from './components/TodoList.js';
+import TodoForm from './components/TodoForm.js';
 
 function App() {
-
-  const [todos, setTodos] = useState([
-    {
-      item: 'Learn about reducers',
-      completed: false,
-      id: 3892987589
-    }
-  ]);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  console.log('state', state);
 
   const addTodo = item => {
-    const newTodos = [...todos, { item, completed: false, id: new Date() }];
-    setTodos(newTodos);
+    dispatch({ type: "ADD_TODO", payload: item });
   };
 
-  const toggleTodo = index => {
-    const newTodos = [...todos];
-    if (newTodos[index].completed === false) {
-      newTodos[index].completed = true;
-    } else {
-      newTodos[index].completed = false;
-    }
-    setTodos(newTodos);
+  const toggleTodo = id => {
+    dispatch({ type: "TOGGLE_TODO", payload: id });
   };
 
-  const removeTodo = index => {
-    const newTodos = [...todos];
-    newTodos.splice(index, 1);
-    setTodos(newTodos);
+  const clearCompleted = () => {
+    dispatch({ type: "CLEAR_COMPLETED" });
   };
 
   return (
-    <div>
-      <Container id="container">
-
-        <Row>
-          <Col sm="12" md={{ size: 6, offset: 3 }}>
-
-            <h1>Todo List</h1>
-            <p className="link">GitHub: <a href="https://github.com/eddiemadrigal/todo-demo" target="_blank">https://github.com/eddiemadrigal/todo-demo</a></p>
-            <TodoForm addTodo={addTodo} />  
-
-            {todos.map((item, index) => (
-              <Todo
-                key={index}
-                index={index}
-                todo={item}
-                toggleTodo={toggleTodo}
-                removeTodo={removeTodo}
-              />
-            ))}
-          </Col>
-        </Row>
-        
-      </Container>
+    <div className="App">
+      <TodoForm addTodo={addTodo} clearCompleted={clearCompleted} />
+      <TodoList todoArray={state.todoArray} toggleTodo={toggleTodo} />
     </div>
   );
 }
