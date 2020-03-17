@@ -19,6 +19,7 @@ const TodoForm = (props) => {
     <Form onSubmit={handleSubmit}>
       <Container id="container">
         <h1>Todo List</h1>
+        <p className="link">GitHub: <a target="_blank" href="https://github.com/eddiemadrigal/todo-demo">https://github.com/eddiemadrigal/todo-demo</a></p>
         <Row>
           <Col sm="12" md={{ size: 6, offset: 3 }}>
             <Input type="text"
